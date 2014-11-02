@@ -13,5 +13,13 @@
     "2d"
   ],
   "author": "Paul Salaets <psalaets@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/psalaets/ray-vs-circle.git"
+  },
+  "homepage": "https://github.com/psalaets/ray-vs-circle",
+  "bugs": {
+    "url": "https://github.com/psalaets/ray-vs-circle/issues"
+  }
 }
