@@ -4,7 +4,7 @@
   "description": "Ray-aware circle intersection check.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha test.js"
   },
   "keywords": [
     "ray",
@@ -21,5 +21,8 @@
   "homepage": "https://github.com/psalaets/ray-vs-circle",
   "bugs": {
     "url": "https://github.com/psalaets/ray-vs-circle/issues"
+  },
+  "devDependencies": {
+    "mocha": "^2.0.1"
   }
 }
