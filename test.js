@@ -82,7 +82,7 @@ describe('rayVsCircle()', function() {
 
     describe('ray goes wide of circle', function() {
       it('returns null', function() {
-        rayish = new Rayish(new Vec2(10, 50), new Vec2(60, 50));
+        rayish = new Rayish(new Vec2(10, 50), new Vec2(60, 60));
 
         var point = rayVsCircle(rayish, circle);
 
