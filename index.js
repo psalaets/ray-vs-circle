@@ -15,19 +15,19 @@ var lineIntersect = require('line-intersect');
 *   radius: number
 * }
 *
-* @return {vec2} point where ray hits circle or null if ray doesn't hit
+* @return {object} point (x/y) where ray hits circle or null if ray doesn't hit
 */
-function rayVsCircle(rayish, circle) {
-  var rayStart = new Vec2(rayish.start);
+function rayVsCircle(ray, circle) {
+  var rayStart = new Vec2(ray.start);
 
-  if (circleContainsPoint(circle.position, circle.radius, rayish.start)) {
+  if (circleContainsPoint(circle.position, circle.radius, ray.start)) {
     return rayStart;
   }
 
-  var intersections = rayLineVsCircle(rayish, circle);
+  var intersections = rayLineVsCircle(ray, circle);
 
   if (intersections.length) {
-    return rayStart.nearest(intersections.filter(within(rayish)));
+    return rayStart.nearest(intersections.filter(within(ray)));
   } else {
     return null;
   }
@@ -36,16 +36,16 @@ function rayVsCircle(rayish, circle) {
 /**
 * Treats ray like an infinite line see where it intersects circle.
 *
-* @param {Rayish} rayish
+* @param {object} ray - ray-like
 * @param {Circle2} circle
 * @return {Array} containing 0, 1, or 2 Vec2 where line hits circle
 */
-function rayLineVsCircle(rayish, circle) {
+function rayLineVsCircle(ray, circle) {
   var rayLine = new Line2(
-    rayish.start.x,
-    rayish.start.y,
-    rayish.end.x,
-    rayish.end.y
+    ray.start.x,
+    ray.start.y,
+    ray.end.x,
+    ray.end.y
   );
 
   return rayLine.intersectCircle(circle.position, circle.radius);
@@ -62,16 +62,16 @@ function distance(x1, y1, x2, y2) {
 }
 
 /**
-* @param {object} rayish - ray-like
+* @param {object} ray - ray-like
 * @return {Function} function that returns true when passed an x/y that is
 *                    within ray
 */
-function within(rayish) {
+function within(ray) {
   return function(vec) {
     return lineIntersect.colinearPointWithinSegment(
       vec.x, vec.y,
-      rayish.start.x, rayish.start.y,
-      rayish.end.x, rayish.end.y
+      ray.start.x, ray.start.y,
+      ray.end.x, ray.end.y
     );
   };
 }
