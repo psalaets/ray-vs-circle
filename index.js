@@ -1,15 +1,33 @@
 var Line2 = require('line2');
-var Segment2 = require('segment2');
+var Vec2 = require('vec2');
+var lineIntersect = require('line-intersect');
 
+/**
+* @param {object} ray - Object that looks like
+* {
+*   start: {x: number, y: number},
+*   end: {x: number, y: number}
+* }
+*
+* @param {object} circle - Object that looks like
+* {
+*   position: {x: number, y: number},
+*   radius: number
+* }
+*
+* @return {vec2} point where ray hits circle or null if ray doesn't hit
+*/
 function rayVsCircle(rayish, circle) {
-  if (circle.containsPoint(rayish.start)) {
-    return rayish.start;
+  var rayStart = new Vec2(rayish.start);
+
+  if (circleContainsPoint(circle.position, circle.radius, rayish.start)) {
+    return rayStart;
   }
 
   var intersections = rayLineVsCircle(rayish, circle);
 
   if (intersections.length) {
-    return rayish.start.nearest(intersections.filter(within(rayish)));
+    return rayStart.nearest(intersections.filter(within(rayish)));
   } else {
     return null;
   }
@@ -30,19 +48,31 @@ function rayLineVsCircle(rayish, circle) {
     rayish.end.y
   );
 
-  return rayLine.intersectCircle(circle.position, circle.radius());
+  return rayLine.intersectCircle(circle.position, circle.radius);
+}
+
+function circleContainsPoint(circlePosition, radius, point) {
+  return distance(circlePosition.x, circlePosition.y, point.x, point.y) <= radius;
+}
+
+function distance(x1, y1, x2, y2) {
+  var x = x1 - x2;
+  var y = y1 - y2;
+  return Math.sqrt(x * x + y * y);
 }
 
 /**
-* @param {Rayish} rayish
-* @return {Function} function that returns true when passed a Vec2 that is
-*                    within rayish
+* @param {object} rayish - ray-like
+* @return {Function} function that returns true when passed an x/y that is
+*                    within ray
 */
 function within(rayish) {
-  var raySegment = new Segment2(rayish.start, rayish.end);
-
   return function(vec) {
-    return raySegment.containsPoint(vec);
+    return lineIntersect.colinearPointWithinSegment(
+      vec.x, vec.y,
+      rayish.start.x, rayish.start.y,
+      rayish.end.x, rayish.end.y
+    );
   };
 }
 
