@@ -7,7 +7,7 @@ Ray-aware circle intersection check.
     var rayVsCircle = require('ray-vs-circle');
     
     var circle = {
-      position: {x: 50, 50},
+      position: {x: 50, y: 50},
       radius: 5
     };
     
