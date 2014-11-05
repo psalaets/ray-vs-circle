@@ -6,16 +6,19 @@ Ray-aware circle intersection check.
 
     var rayVsCircle = require('ray-vs-circle');
     
-    var Vec2 = require('vec2');
-    var Rayish = require('rayish');
-    var Circle2 = require('circle2');
+    var circle = {
+      position: {x: 50, 50},
+      radius: 5
+    };
     
-    var rayish = new Rayish(new Vec2(10, 50), new Vec2(50, 50));
-    var circle = new Circle2(new Vec2(50, 50), 5);
+    var ray = {
+      start: {x: 10, y: 50},
+      end: {x: 50, y: 50}
+    };
     
     var point = rayVsCircle(rayish, circle);
     
-    point // (45, 50)
+    point // {x: 45, y: 50}
 
 ## Install
 
