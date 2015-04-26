@@ -25,7 +25,7 @@ point // {x: 45, y: 50}
 ## Install
 
 ```bash
-$ npm install ray-vs-circle
+npm install ray-vs-circle
 ```
 
 ## License
